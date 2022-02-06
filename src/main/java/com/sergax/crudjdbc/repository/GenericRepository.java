@@ -3,9 +3,9 @@ package com.sergax.crudjdbc.repository;
 import java.util.List;
 
 public interface GenericRepository<T, ID> {
-    T getId (ID id);
+    T getById(ID id);
 
-    void deleteBuID(ID id);
+    void deleteById(ID id);
 
     T update(T item);
 
