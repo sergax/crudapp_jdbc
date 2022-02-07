@@ -1,6 +1,5 @@
 package com.sergax.crudjdbc.service.impl;
 
-import com.sergax.crudjdbc.model.Post;
 import com.sergax.crudjdbc.model.Tag;
 import com.sergax.crudjdbc.repository.TagRepository;
 import com.sergax.crudjdbc.repository.jdbc.JdbcTagImpl;

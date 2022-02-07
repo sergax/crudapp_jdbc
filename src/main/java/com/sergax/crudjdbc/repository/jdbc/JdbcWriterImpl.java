@@ -58,6 +58,7 @@ public class JdbcWriterImpl implements WriterRepository {
             preparedStatement.setString(2, writer.getName());
             preparedStatement.executeUpdate();
 
+            //disable autocommit mode
             ConnectionWithDb.getInstance().getConnection().setAutoCommit(false);
             for (Long postsId : getIdPosts(writer)) {
                 preparedStatementAddPosts.setLong(1, newId);
