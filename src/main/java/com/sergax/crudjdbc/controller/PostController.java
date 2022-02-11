@@ -20,8 +20,8 @@ public class PostController {
         return postService.getById(id);
     }
 
-    public Post save(Post post) {
-        return postService.save(post);
+    public Post create(Post post) {
+        return postService.create(post);
     }
 
     public Post update(Post post) {

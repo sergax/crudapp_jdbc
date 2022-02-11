@@ -9,7 +9,7 @@ public interface GenericService<T, ID> {
 
     List<T> getAll();
 
-    T save(T t);
+    T create(T t);
 
     T update(T t);
 }

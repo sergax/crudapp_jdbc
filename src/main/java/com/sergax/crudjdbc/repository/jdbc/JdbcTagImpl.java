@@ -12,16 +12,16 @@ import java.util.List;
 
 public class JdbcTagImpl implements TagRepository {
     private final String SqlSelect = "select * from tag";
-    private final String SqlDelete = "delete from tag where id = ?";
-    private final String SqlUpdate = "update tag set name = ? where id = ?";
-    private final String SqlAdd = "insert into tag " +
-            "(id, name) " +
+    private final String SqlDelete = "delete from tag where tag_id = ?";
+    private final String SqlUpdate = "update tag set name = ? where tag_id = ?";
+    private final String SqlCreate = "insert into tag " +
+            "(tag_id, name) " +
             "values" +
             "(?, ?)";
 
     @Override
     public Tag getById(Long id) {
-        return getAll().stream().filter(tag -> id.equals(tag.getId())).findFirst().orElse(null);
+        return getAll().stream().filter(tag -> id.equals(tag.getTag_id())).findFirst().orElse(null);
     }
 
     @Override
@@ -36,9 +36,10 @@ public class JdbcTagImpl implements TagRepository {
 
     @Override
     public Tag update(Tag tag) {
+        //need refactoring !!!!!!!!!!!!!!!!!!!!!!!!!!!!
         try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SqlUpdate)) {
             preparedStatement.setString(1, tag.getName());
-            preparedStatement.setLong(2, tag.getId());
+            preparedStatement.setLong(2, tag.getTag_id());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,8 +48,8 @@ public class JdbcTagImpl implements TagRepository {
     }
 
     @Override
-    public Tag save(Tag tag) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SqlAdd)) {
+    public Tag create(Tag tag) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SqlCreate)) {
             preparedStatement.setLong(1, generateId());
             preparedStatement.setString(2, tag.getName());
             preparedStatement.executeUpdate();
@@ -75,7 +76,7 @@ public class JdbcTagImpl implements TagRepository {
         try {
             while (resultSet.next()) {
                 Tag tag = new Tag();
-                tag.setId((long) resultSet.getInt("id"));
+                tag.setTag_id((long) resultSet.getInt("tag_id"));
                 tag.setName(resultSet.getString("name"));
                 tags.add(tag);
             }
@@ -87,7 +88,7 @@ public class JdbcTagImpl implements TagRepository {
 
     private long generateId() {
         return !getAll().isEmpty() ?
-                getAll().stream().skip(getAll().size() - 1).findFirst().get().getId() + 1
+                getAll().stream().skip(getAll().size() - 1).findFirst().get().getTag_id() + 1
                 : 1L;
     }
 }

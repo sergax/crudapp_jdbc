@@ -23,6 +23,8 @@ public enum Messages {
     EMPTY_LIST("List is empty"),
     SUCCESSFUL_OPERATION("Successful operation"),
     ERROR_OPERATION("Error!!!"),
+    TAG("Put your Tag ID : "),
+    STATUS("Choose status : "),
     NAME("Put your name : "),
     ID("Put your ID : "),
     NOT_FIND_ID("Not found ID "),

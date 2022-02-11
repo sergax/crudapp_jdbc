@@ -5,7 +5,9 @@ import com.sergax.crudjdbc.controller.TagController;
 import com.sergax.crudjdbc.model.Post;
 import com.sergax.crudjdbc.model.PostStatus;
 import com.sergax.crudjdbc.model.Tag;
+import com.sergax.crudjdbc.repository.jdbc.JdbcTagImpl;
 import com.sergax.crudjdbc.utils.Messages;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,10 @@ public class PostView extends GeneralView {
     private TagController tagController;
     private Scanner sc;
 
-    public PostView(Scanner sc, PostController postController) {
+    public PostView(Scanner sc, PostController postController, TagController tagController) {
         this.message = actionList;
         this.postController = postController;
+        this.tagController = tagController;
         this.sc = sc;
     }
 
@@ -70,7 +73,10 @@ public class PostView extends GeneralView {
     @Override
     public void create() {
         System.out.println(createActionList);
-        postController.save(createPost());
+        String content = sc.next();
+        List<Tag> tagList = selectTags();
+        PostStatus status = PostStatus.ACTIVE;
+        postController.create(new Post(null, content, tagList, status));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -113,7 +119,7 @@ public class PostView extends GeneralView {
                     post.setContent(content);
                     break;
                 } else if (response == 2) {
-                    post.setTags(selectTags());
+//                    post.setTags(selectTags());
                 } else if (response == 3) {
                     post.setStatus(selectStatus());
                 }
@@ -123,24 +129,20 @@ public class PostView extends GeneralView {
     }
 
     private List<Tag> selectTags() {
-        System.out.println(tagController.getAll());
+        System.out.println("Existing Tags" + tagController.getAll());
         List<Tag> tagList = new ArrayList<>();
-
+        System.out.println(Messages.TAG.getMessage());
         Long input;
         sc = new Scanner(System.in);
-        while (true) {
-            input = sc.nextLong();
-            if (input != 0) {
-                tagList.add(tagController.getById(input));
-            } else {
-                break;
-            }
+        input = Long.parseLong(sc.nextLine());
+        if (input != 0) {
+            tagList.add(tagController.getById(input));
         }
         return tagList;
     }
 
     private PostStatus selectStatus() {
-        System.out.println("Choose status :");
+        System.out.println(Messages.STATUS.getMessage());
         System.out.println("1. ACTIVE, \n" +
                 "2. DELETED. \n");
         Long input = sc.nextLong();
@@ -156,12 +158,8 @@ public class PostView extends GeneralView {
         return postStatus;
     }
 
-    private Post createPost() {
-        System.out.println(Messages.CONTENT.getMessage());
-        String content = sc.nextLine();
-        List<Tag> tagList = selectTags();
-        PostStatus status = selectStatus();
-        Post newPost = new Post(null, content, tagList, status);
-        return newPost;
+    private String selectNameContent() {
+        String name = sc.nextLine();
+        return name;
     }
 }

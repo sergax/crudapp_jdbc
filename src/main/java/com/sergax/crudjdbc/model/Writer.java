@@ -11,8 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Writer {
-    private Long id;
+    private Long writer_id;
     private String name;
     private List<Post> posts;
-
 }

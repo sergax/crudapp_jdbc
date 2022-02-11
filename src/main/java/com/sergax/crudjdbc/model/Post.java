@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
-    private Long id;
+    private Long post_id;
     private String content;
     private List<Tag> tags;
     private PostStatus status;

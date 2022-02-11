@@ -1,7 +1,6 @@
 package com.sergax.crudjdbc.controller;
 
 import com.sergax.crudjdbc.model.Tag;
-import com.sergax.crudjdbc.repository.TagRepository;
 import com.sergax.crudjdbc.service.TagService;
 import com.sergax.crudjdbc.service.impl.TagServiceImpl;
 
@@ -18,8 +17,8 @@ public class TagController {
         return tagService.getById(id);
     }
 
-    public Tag save(Tag tag) {
-        return tagService.save(tag);
+    public Tag create(Tag tag) {
+        return tagService.create(tag);
     }
 
     public Tag update(Tag tag) {

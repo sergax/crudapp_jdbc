@@ -1,6 +1,5 @@
 package com.sergax.crudjdbc.service.impl;
 
-import com.sergax.crudjdbc.model.Post;
 import com.sergax.crudjdbc.model.Writer;
 import com.sergax.crudjdbc.repository.WriterRepository;
 import com.sergax.crudjdbc.repository.jdbc.JdbcWriterImpl;
@@ -27,8 +26,8 @@ public class WriterServiceImpl implements WriterService {
     }
 
     @Override
-    public Writer save(Writer writer) {
-        return writerRepository.save(writer);
+    public Writer create(Writer writer) {
+        return writerRepository.create(writer);
     }
 
     @Override
