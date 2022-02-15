@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class WriterView extends GeneralView {
-    private WriterController writerController;
-    private PostController postController;
+    private final WriterController writerController;
+    private final PostController postController;
     private Scanner sc;
 
     public WriterView(WriterController writerController, PostController postController, Scanner sc) {
@@ -22,12 +22,14 @@ public class WriterView extends GeneralView {
         this.sc = sc;
     }
 
-    private final String actionList = "Choose action by writers : \n" +
-            "1. Create \n" +
-            "2. Update \n" +
-            "3. Delete \n" +
-            "4. Get list \n" +
-            "5. Exit \n";
+    private final String actionList = """
+            Choose action by writers :\s
+            1. Create\s
+            2. Update\s
+            3. Delete\s
+            4. Get list\s
+            5. Exit\s
+            """;
 
     private final String printActionList = "List of writers : \n" + "ID; name; Writers";
     private final String createActionList = "Create writers . \n" + Messages.NAME.getMessage();
@@ -37,33 +39,19 @@ public class WriterView extends GeneralView {
     @Override
     public void show() {
         boolean isExit = false;
-        while (true) {
+        do {
             print();
             System.out.println(actionList);
             String response = sc.next();
             switch (response) {
-                case "1":
-                    create();
-                    break;
-                case "2":
-                    edit();
-                    break;
-                case "3":
-                    delete();
-                    break;
-                case "4":
-                    print();
-                    break;
-                case "5":
-                    isExit = true;
-                    break;
-                default:
-                    System.out.println(Messages.ERROR_INPUT.getMessage());
-                    break;
+                case "1" -> create();
+                case "2" -> edit();
+                case "3" -> delete();
+                case "4" -> print();
+                case "5" -> isExit = true;
+                default -> System.out.println(Messages.ERROR_INPUT.getMessage());
             }
-            if (isExit)
-                break;
-        }
+        } while (!isExit);
     }
 
     @Override
@@ -77,6 +65,11 @@ public class WriterView extends GeneralView {
 
     @Override
     void edit() {
+        writerController.update(updateWriters());
+        System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
+    }
+
+    private Writer updateWriters() {
         System.out.println(updateActionList);
         Long id = sc.nextLong();
         Writer writer = writerController.getById(id);
@@ -86,7 +79,7 @@ public class WriterView extends GeneralView {
             while (true) {
                 if (response == 1) {
                     System.out.println(Messages.NAME.getMessage());
-                    String name = sc.nextLine();
+                    String name = sc.next();
                     writer.setName(name);
                     break;
                 } else if (response == 2) {
@@ -95,6 +88,7 @@ public class WriterView extends GeneralView {
                 }
             }
         }
+        return writer;
     }
 
     private List<Post> selectPosts() {
@@ -119,14 +113,15 @@ public class WriterView extends GeneralView {
     @Override
     void print() {
         System.out.println(printActionList);
-        System.out.println(postController.getAll());
+        System.out.println(writerController.getAll());
     }
 
     private List<Post> selectPostsList() {
         System.out.println("Existing Posts : " + postController.getAll());
         List<Post> postList = new ArrayList<>();
         System.out.println(Messages.POST.getMessage());
-        Long id = sc.nextLong();
+        sc = new Scanner(System.in);
+        Long id = Long.valueOf(sc.nextLine());
         if (id != 0) {
             postList.add(postController.getById(id));
         }

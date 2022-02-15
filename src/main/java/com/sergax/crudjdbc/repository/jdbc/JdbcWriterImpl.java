@@ -10,19 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class JdbcWriterImpl implements WriterRepository {
-    private final String SQL_SELECT = "select * from writer left join post using(post_id)";
+    private final String SQL_SELECT = "select * from writer join post using(post_id)";
     private final String SQL_DELETE = "delete from writer where writer_id = ?";
-    private final String SQL_UPDATE = "update writer set name = ? where id = ?";
+    private final String SQL_UPDATE = "update writer set name = ? where writer_id = ?";
     private final String SQL_ADD = "insert into writer " +
-            "(writer_id, name) " +
+            "(writer_id, name, post_id) " +
             "values" +
-            "(?, ?)";
-    private final String SQL_ADD_POSTS = "insert into post " +
-            "(writer_id) " +
-            "values " +
-            "(?)";
+            "(?, ?, ?)";
     private final String SQL_GET_POSTS = "select * from post where post_id = ? ";
 
     @Override
@@ -54,20 +51,11 @@ public class JdbcWriterImpl implements WriterRepository {
 
     @Override
     public Writer create(Writer writer) {
-        Long newId = generateId();
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_ADD);
-             PreparedStatement preparedStatementAddPosts = ConnectionWithDb.getPreparedStatement(SQL_ADD_POSTS)) {
-            preparedStatement.setLong(1, newId);
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_ADD)) {
+            preparedStatement.setLong(1, generateId());
             preparedStatement.setString(2, writer.getName());
+            preparedStatement.setLong(3, getPostsId());
             preparedStatement.executeUpdate();
-
-//            disable autocommit mode
-            ConnectionWithDb.getInstance().getConnection().setAutoCommit(false);
-            for (Long postsId : getIdPosts(writer)) {
-                preparedStatementAddPosts.setLong(1, postsId);
-                preparedStatementAddPosts.executeUpdate();
-            }
-            ConnectionWithDb.getInstance().getConnection().setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -96,10 +84,12 @@ public class JdbcWriterImpl implements WriterRepository {
         List<Writer> writers = new ArrayList<>();
         try {
             while (resultSet.next()) {
+                Long id = resultSet.getLong("post_id");
                 Writer writer = new Writer();
                 writer.setWriter_id((long) resultSet.getInt("writer_id"));
                 writer.setName(resultSet.getString("name"));
-                writer.setPosts(getPostsList(writer.getWriter_id()));
+                writer.setPosts(getPostsList(id));
+                writers.add(writer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,11 +110,8 @@ public class JdbcWriterImpl implements WriterRepository {
         return posts;
     }
 
-    private List<Long> getIdPosts(Writer writer) {
-        List<Long> postId = new ArrayList<>();
-        for (Post posts : writer.getPosts()) {
-            postId.add(posts.getPost_id());
-        }
-        return postId;
+    private Long getPostsId() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLong();
     }
 }

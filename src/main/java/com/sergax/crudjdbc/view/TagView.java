@@ -7,7 +7,7 @@ import com.sergax.crudjdbc.utils.Messages;
 import java.util.Scanner;
 
 public class TagView extends GeneralView {
-    private TagController tagController;
+    private final TagController tagController;
     private Scanner sc;
 
     public TagView(TagController tagController, Scanner sc) {
@@ -16,12 +16,14 @@ public class TagView extends GeneralView {
         this.sc = sc;
     }
 
-    private final String actionList = "Choose action by tags : \n" +
-            "1. Create \n" +
-            "2. Update \n" +
-            "3. Delete \n" +
-            "4. Get list \n" +
-            "5. Exit \n";
+    private final String actionList = """
+            Choose action by tags :\s
+            1. Create\s
+            2. Update\s
+            3. Delete\s
+            4. Get list\s
+            5. Exit\s
+            """;
 
     private final String printActionList = "List of tags : \n" + "ID; name";
     private final String createActionList = "Create tag . \n" + Messages.NAME.getMessage();
@@ -31,34 +33,20 @@ public class TagView extends GeneralView {
     @Override
     public void show() {
         boolean isExit = false;
-        while (true) {
+        do {
             print();
             System.out.println(actionList);
             String response = sc.next();
             switch (response) {
-                case "1":
-                    create();
-                    break;
-                case "2":
-                    edit();
-                    break;
-                case "3":
-                    delete();
-                    break;
-                case "4":
-                    print();
-                    break;
-                case "5":
-                    isExit = true;
-                    break;
-                default:
-                    System.out.println(Messages.ERROR_INPUT.getMessage());
-                    break;
+                case "1" -> create();
+                case "2" -> edit();
+                case "3" -> delete();
+                case "4" -> print();
+                case "5" -> isExit = true;
+                default -> System.out.println(Messages.ERROR_INPUT.getMessage());
             }
 
-            if (isExit)
-                break;
-        }
+        } while (!isExit);
     }
 
     @Override

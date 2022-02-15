@@ -37,7 +37,7 @@ public class ConnectionWithDb {
             preparedStatement = getInstance().
                     getConnection().
                     prepareStatement(SQL);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return preparedStatement;

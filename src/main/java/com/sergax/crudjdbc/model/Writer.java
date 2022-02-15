@@ -1,6 +1,5 @@
 package com.sergax.crudjdbc.model;
 
-import liquibase.pro.packaged.A;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

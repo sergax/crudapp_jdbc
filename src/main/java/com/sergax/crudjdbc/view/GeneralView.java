@@ -19,32 +19,18 @@ public abstract class GeneralView {
 
     void show() {
         boolean isExit = false;
-        while (true) {
+        do {
             print();
             System.out.println(message);
             String response = sc.next();
             switch (response) {
-                case "1":
-                    create();
-                    break;
-                case "2":
-                    edit();
-                    break;
-                case "3":
-                    delete();
-                    break;
-                case "4":
-                    print();
-                    break;
-                case "5":
-                    isExit = true;
-                    break;
-                default:
-                    System.out.println(Messages.ERROR_INPUT.getMessage());
-                    break;
+                case "1" -> create();
+                case "2" -> edit();
+                case "3" -> delete();
+                case "4" -> print();
+                case "5" -> isExit = true;
+                default -> System.out.println(Messages.ERROR_INPUT.getMessage());
             }
-            if (isExit)
-                break;
-        }
+        } while (!isExit);
     }
 }

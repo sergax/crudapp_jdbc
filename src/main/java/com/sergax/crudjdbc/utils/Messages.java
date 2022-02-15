@@ -1,7 +1,6 @@
 package com.sergax.crudjdbc.utils;
 
 public enum Messages {
-
     DATA_DAMAGED("Data is damaged"),
     UPDATE_POST("""
             Create actions :\s
@@ -21,10 +20,7 @@ public enum Messages {
             3.Writers\s
             4.Exit\s
             """),
-    DELETED_STATUS("You can't edit, post was DELETE"),
-    ACTIVE_STATUS("You can't edit, post is ACTIVE"),
     ERROR_INPUT("Wrong input, try again pleas"),
-    EMPTY_LIST("List is empty"),
     SUCCESSFUL_OPERATION("Successful operation"),
     ERROR_OPERATION("Error!!!"),
     TAG("Put your Tag ID : "),
@@ -32,7 +28,6 @@ public enum Messages {
     STATUS("Choose status : "),
     NAME("Put your name : "),
     ID("Put your ID : "),
-    NOT_FIND_ID("Not found ID "),
     CONTENT("Put your content : ");
 
     private final String message;

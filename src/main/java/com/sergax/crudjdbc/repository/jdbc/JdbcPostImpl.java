@@ -1,6 +1,5 @@
 package com.sergax.crudjdbc.repository.jdbc;
 
-import com.sergax.crudjdbc.controller.PostController;
 import com.sergax.crudjdbc.model.Post;
 import com.sergax.crudjdbc.model.PostStatus;
 import com.sergax.crudjdbc.model.Tag;
@@ -28,7 +27,6 @@ public class JdbcPostImpl implements PostRepository {
             "values " +
             "(?, ?)";
     private final String SQL_GET_TAGS = "select * from tag join tag_post using(tag_id) where post_id = ?";
-    private final String SQL_DELETE_ALL = "truncate table post";
 
     @Override
     public Post getById(Long id) {
@@ -45,31 +43,13 @@ public class JdbcPostImpl implements PostRepository {
         }
     }
 
-    public void deleteAll() {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_DELETE_ALL)) {
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public Post update(Post post) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_UPDATE);
-             PreparedStatement preparedStatementAddTags = ConnectionWithDb.getPreparedStatement(SQL_ADD_TAGS)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_UPDATE)) {
             preparedStatement.setString(1, post.getContent());
             preparedStatement.setString(2, String.valueOf(post.getStatus()));
             preparedStatement.setLong(3, post.getPost_id());
             preparedStatement.executeUpdate();
-
-//          disable autocommit mode
-//            ConnectionWithDb.getInstance().getConnection().setAutoCommit(false);
-//            for (Long tagId : getIdTags(post)
-//            ) {
-//                preparedStatementAddTags.setLong(1, tagId);
-//                preparedStatementAddTags.executeUpdate();
-//            }
-//            ConnectionWithDb.getInstance().getConnection().setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -144,8 +124,7 @@ public class JdbcPostImpl implements PostRepository {
 
     private Long getPostsId() {
         Scanner scanner = new Scanner(System.in);
-        Long idNew = scanner.nextLong();
-        return idNew;
+        return scanner.nextLong();
     }
 
     private List<Tag> getTagsList(Long postsId) {

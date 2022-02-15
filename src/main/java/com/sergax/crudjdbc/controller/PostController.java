@@ -1,11 +1,8 @@
 package com.sergax.crudjdbc.controller;
 
 import com.sergax.crudjdbc.model.Post;
-
 import com.sergax.crudjdbc.service.PostService;
-
 import com.sergax.crudjdbc.service.impl.PostServiceImpl;
-
 
 import java.util.List;
 

@@ -8,11 +8,11 @@ import com.sergax.crudjdbc.utils.Messages;
 import java.util.Scanner;
 
 public class ConsoleRunner {
-    GeneralView writerView;
-    GeneralView postView;
-    GeneralView tagView;
+    private GeneralView tagView;
+    private GeneralView postView;
+    private GeneralView writerView;
 
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     public ConsoleRunner() {
         try {
@@ -21,7 +21,7 @@ public class ConsoleRunner {
             WriterController writerController = new WriterController();
 
             tagView = new TagView(tagController, sc);
-            postView = new PostView(sc, postController, tagController);
+            postView = new PostView(postController, tagController, sc);
             writerView = new WriterView(writerController, postController, sc);
 
         } catch (Exception e) {
@@ -31,29 +31,17 @@ public class ConsoleRunner {
 
     public void run() {
         boolean isExit = false;
-        while (true) {
+        do {
             System.out.println(Messages.ACTION_LIST.getMessage());
             String response = sc.next();
             switch (response) {
-                case "1":
-                    tagView.show();
-                    break;
-                case "2":
-                    postView.show();
-                    break;
-                case "3":
-                    writerView.show();
-                    break;
-                case "4":
-                    isExit = true;
-                    break;
-                default:
-                    System.out.println(Messages.ERROR_INPUT.getMessage());
-                    break;
+                case "1" -> tagView.show();
+                case "2" -> postView.show();
+                case "3" -> writerView.show();
+                case "4" -> isExit = true;
+                default -> System.out.println(Messages.ERROR_INPUT.getMessage());
             }
-            if (isExit)
-                break;
-        }
+        } while (!isExit);
         sc.close();
     }
 

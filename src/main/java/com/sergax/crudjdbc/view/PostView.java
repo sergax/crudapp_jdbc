@@ -13,24 +13,26 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PostView extends GeneralView {
+    private final PostController postController;
+    private final TagController tagController;
     private PostStatus postStatus;
-    private PostController postController;
-    private TagController tagController;
     private Scanner sc;
 
-    public PostView(Scanner sc, PostController postController, TagController tagController) {
+    public PostView(PostController postController, TagController tagController, Scanner sc) {
         this.message = actionList;
         this.postController = postController;
         this.tagController = tagController;
         this.sc = sc;
     }
 
-    private final String actionList = "Choose action by posts : \n" +
-            "1. Create \n" +
-            "2. Update \n" +
-            "3. Delete \n" +
-            "4. Get list \n" +
-            "5. Exit \n";
+    private final String actionList = """
+            Choose action by posts :\s
+            1. Create\s
+            2. Update\s
+            3. Delete\s
+            4. Get list\s
+            5. Exit\s
+            """;
 
     private final String printActionList = "List of posts : \n" + "ID; content; Tags; status";
     private final String createActionList = "Create post . \n" + Messages.CONTENT.getMessage();
@@ -40,33 +42,19 @@ public class PostView extends GeneralView {
     @Override
     public void show() {
         boolean isExit = false;
-        while (true) {
+        do {
             print();
             System.out.println(actionList);
             String response = sc.next();
             switch (response) {
-                case "1":
-                    create();
-                    break;
-                case "2":
-                    edit();
-                    break;
-                case "3":
-                    delete();
-                    break;
-                case "4":
-                    print();
-                    break;
-                case "5":
-                    isExit = true;
-                    break;
-                default:
-                    System.out.println(Messages.ERROR_INPUT.getMessage());
-                    break;
+                case "1" -> create();
+                case "2" -> edit();
+                case "3" -> delete();
+                case "4" -> print();
+                case "5" -> isExit = true;
+                default -> System.out.println(Messages.ERROR_INPUT.getMessage());
             }
-            if (isExit)
-                break;
-        }
+        } while (!isExit);
     }
 
     @Override
@@ -133,7 +121,6 @@ public class PostView extends GeneralView {
         System.out.println("Existing Tags" + tagController.getAll());
         List<Tag> tagList = new ArrayList<>();
         System.out.println(Messages.TAG.getMessage());
-        sc = new Scanner(System.in);
         Long input = Long.parseLong(sc.nextLine());
         if (input != 0) {
             tagList.add(tagController.getById(input));
