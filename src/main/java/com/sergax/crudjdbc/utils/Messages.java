@@ -6,9 +6,13 @@ public enum Messages {
     UPDATE_POST("""
             Create actions :\s
             1. Update content\s
-            2. Update Tags\s
-            3. Update Status\s
-            4. Exit\s
+            2. Update Status\s
+            3. Exit\s
+            """),
+    UPDATE_WRITERS("""
+            Create actions :\s
+            1. Update name\s
+            2. Exit\s
             """),
     ACTION_LIST("""
             Create actions :\s
@@ -24,6 +28,7 @@ public enum Messages {
     SUCCESSFUL_OPERATION("Successful operation"),
     ERROR_OPERATION("Error!!!"),
     TAG("Put your Tag ID : "),
+    POST("Put your Post ID : "),
     STATUS("Choose status : "),
     NAME("Put your name : "),
     ID("Put your ID : "),

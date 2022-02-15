@@ -74,7 +74,7 @@ public class TagView extends GeneralView {
         System.out.println(updateActionList);
         Long id = Long.parseLong(String.valueOf(sc.nextLong()));
         System.out.println(Messages.NAME.getMessage());
-        String name = sc.nextLine();
+        String name = sc.next();
         tagController.update(new Tag(id, name));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }

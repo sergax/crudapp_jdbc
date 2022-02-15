@@ -22,7 +22,7 @@ public class ConsoleRunner {
 
             tagView = new TagView(tagController, sc);
             postView = new PostView(sc, postController, tagController);
-//            writerView = new WriterView(sc, writerController);
+            writerView = new WriterView(writerController, postController, sc);
 
         } catch (Exception e) {
             System.err.println(Messages.DATA_DAMAGED.getMessage());

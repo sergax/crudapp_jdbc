@@ -15,4 +15,13 @@ public class Post {
     private List<Tag> tags;
     private PostStatus status;
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "post_id=" + post_id +
+                ", content='" + content + '\'' +
+                ", tags=" + tags +
+                ", status=" + status +
+                "}\n";
+    }
 }
