@@ -29,7 +29,7 @@ public class JdbcWriterImpl implements WriterRepository {
 
     @Override
     public void deleteById(Long id) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_DELETE)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_DELETE)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -39,7 +39,7 @@ public class JdbcWriterImpl implements WriterRepository {
 
     @Override
     public Writer update(Writer writer) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_UPDATE)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_UPDATE)) {
             preparedStatement.setString(1, writer.getName());
             preparedStatement.setLong(2, writer.getWriter_id());
             preparedStatement.executeUpdate();
@@ -51,7 +51,7 @@ public class JdbcWriterImpl implements WriterRepository {
 
     @Override
     public Writer create(Writer writer) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_ADD)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_ADD)) {
             preparedStatement.setLong(1, generateId());
             preparedStatement.setString(2, writer.getName());
             preparedStatement.setLong(3, getPostsId());
@@ -65,7 +65,7 @@ public class JdbcWriterImpl implements WriterRepository {
     @Override
     public List<Writer> getAll() {
         List<Writer> writers = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_SELECT)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_SELECT)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             writers = getWriter(resultSet);
         } catch (SQLException e) {
@@ -100,7 +100,7 @@ public class JdbcWriterImpl implements WriterRepository {
     private List<Post> getPostsList(Long id) {
         JdbcPostImpl jdbcPost = new JdbcPostImpl();
         List<Post> posts = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_GET_POSTS)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_GET_POSTS)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             posts = jdbcPost.getPost(resultSet);

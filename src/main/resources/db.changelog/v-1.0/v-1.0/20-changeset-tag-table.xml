@@ -8,9 +8,9 @@
     <changeSet id="2" author="sergax" runOnChange="true">
         <createTable tableName="tag">
             <column name="tag_id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" primaryKeyName = "tag_id" nullable="false"/>
             </column>
-            <column name="name" type="text">
+            <column name="name" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
         </createTable>

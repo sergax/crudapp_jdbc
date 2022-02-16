@@ -35,7 +35,7 @@ public class JdbcPostImpl implements PostRepository {
 
     @Override
     public void deleteById(Long id) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_DELETE)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_DELETE)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -45,7 +45,7 @@ public class JdbcPostImpl implements PostRepository {
 
     @Override
     public Post update(Post post) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_UPDATE)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_UPDATE)) {
             preparedStatement.setString(1, post.getContent());
             preparedStatement.setString(2, String.valueOf(post.getStatus()));
             preparedStatement.setLong(3, post.getPost_id());
@@ -58,21 +58,21 @@ public class JdbcPostImpl implements PostRepository {
 
     @Override
     public Post create(Post post) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_CREATE);
-             PreparedStatement preparedStatementAddTags = ConnectionWithDb.getPreparedStatement(SQL_ADD_TAGS)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_CREATE);
+             PreparedStatement preparedStatementAddTags = ConnectionWithDb.getConnection().prepareStatement(SQL_ADD_TAGS)) {
 
             preparedStatement.setLong(1, generateId());
             preparedStatement.setString(2, post.getContent());
             preparedStatement.setString(3, String.valueOf(post.getStatus()));
             preparedStatement.executeUpdate();
 
-            ConnectionWithDb.getInstance().getConnection().setAutoCommit(false);
+            ConnectionWithDb.getConnection().setAutoCommit(false);
             for (Long tagId : getIdTags(post)) {
                 preparedStatementAddTags.setLong(1, tagId);
                 preparedStatementAddTags.setLong(2, getPostsId());
                 preparedStatementAddTags.executeUpdate();
             }
-            ConnectionWithDb.getInstance().getConnection().setAutoCommit(true);
+            ConnectionWithDb.getConnection().setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -82,7 +82,7 @@ public class JdbcPostImpl implements PostRepository {
     @Override
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_SELECT)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_SELECT)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             posts = getPost(resultSet);
         } catch (SQLException e) {
@@ -130,7 +130,7 @@ public class JdbcPostImpl implements PostRepository {
     private List<Tag> getTagsList(Long postsId) {
         JdbcTagImpl jdbcTag = new JdbcTagImpl();
         List<Tag> tagList = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_GET_TAGS)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_GET_TAGS)) {
             preparedStatement.setLong(1, postsId);
             ResultSet resultSet = preparedStatement.executeQuery();
             tagList = jdbcTag.getTags(resultSet);

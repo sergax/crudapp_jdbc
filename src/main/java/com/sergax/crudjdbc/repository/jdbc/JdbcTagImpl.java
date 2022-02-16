@@ -26,7 +26,7 @@ public class JdbcTagImpl implements TagRepository {
 
     @Override
     public void deleteById(Long id) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_DELETE)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_DELETE)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -36,7 +36,7 @@ public class JdbcTagImpl implements TagRepository {
 
     @Override
     public Tag update(Tag tag) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_UPDATE)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_UPDATE)) {
             preparedStatement.setString(1, tag.getName());
             preparedStatement.setLong(2, tag.getTag_id());
             preparedStatement.executeUpdate();
@@ -48,7 +48,7 @@ public class JdbcTagImpl implements TagRepository {
 
     @Override
     public Tag create(Tag tag) {
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_CREATE)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_CREATE)) {
             preparedStatement.setLong(1, generateId());
             preparedStatement.setString(2, tag.getName());
             preparedStatement.executeUpdate();
@@ -61,7 +61,7 @@ public class JdbcTagImpl implements TagRepository {
     @Override
     public List<Tag> getAll() {
         List<Tag> tags = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionWithDb.getPreparedStatement(SQL_SELECT)) {
+        try (PreparedStatement preparedStatement = ConnectionWithDb.getConnection().prepareStatement(SQL_SELECT)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             tags = getTags(resultSet);
         } catch (SQLException e) {
