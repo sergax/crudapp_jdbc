@@ -1,11 +1,13 @@
 package com.sergax.crudjdbc.utils;
 
+import lombok.NoArgsConstructor;
+
 import java.io.IOException;
 import java.util.Properties;
 
+@NoArgsConstructor
 public class CrudProperties {
     private static final Properties PROPERTIES = new Properties();
-    CrudProperties crudProperties = new CrudProperties();
 
     static {
         try {
@@ -15,15 +17,11 @@ public class CrudProperties {
         }
     }
 
-    private CrudProperties() {
-
+    public static  String get(String query) {
+        return PROPERTIES.getProperty(query);
     }
 
-    public static  String get(String key) {
-        return PROPERTIES.getProperty(key);
-    }
-
-    public static void getProperties() throws IOException {
+    private static void getProperties() throws IOException {
         try (var inputStream = CrudProperties.class.getClassLoader()
                 .getResourceAsStream("application.properties")) {
             PROPERTIES.load(inputStream);

@@ -121,7 +121,7 @@ public class PostView extends GeneralView {
         System.out.println("Existing Tags" + tagController.getAll());
         List<Tag> tagList = new ArrayList<>();
         System.out.println(Messages.TAG.getMessage());
-        Long input = Long.parseLong(sc.nextLine());
+        Long input = sc.nextLong();
         if (input != 0) {
             tagList.add(tagController.getById(input));
         }

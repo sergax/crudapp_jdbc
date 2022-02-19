@@ -81,6 +81,7 @@
                 <version>4.3.2</version>
                 <configuration>
                     <propertyFile>src/main/resources/properties/liquibase.properties</propertyFile>
+                    <changeLogFile>src/main/resources/properties/db-changelog/v-1.0/db-changelog.xml</changeLogFile>
                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                 </configuration>
                 <dependencies>

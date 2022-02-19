@@ -94,8 +94,7 @@ public class WriterView extends GeneralView {
     private List<Post> selectPosts() {
         List<Post> postList = new ArrayList<>();
         System.out.println(Messages.POST.getMessage());
-        sc = new Scanner(System.in);
-        Long input = Long.valueOf(sc.nextLine());
+        Long input = sc.nextLong();
         if (input != 0) {
             postList.add(postController.getById(input));
         }
@@ -120,8 +119,7 @@ public class WriterView extends GeneralView {
         System.out.println("Existing Posts : " + postController.getAll());
         List<Post> postList = new ArrayList<>();
         System.out.println(Messages.POST.getMessage());
-        sc = new Scanner(System.in);
-        Long id = Long.valueOf(sc.nextLine());
+        Long id = sc.nextLong();
         if (id != 0) {
             postList.add(postController.getById(id));
         }

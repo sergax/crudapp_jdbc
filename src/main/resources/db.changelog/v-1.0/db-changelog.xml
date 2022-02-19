@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
-        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
 
 <preConditions>
     <dbms type="mysql"/>
@@ -14,7 +15,7 @@
     </changeSet>
 
 <!--    create only relative path-->
-    <include file="v-1.0/db.changelog - v.1.0.xml" relativeToChangelogFile="true"/>
+    <include file="src/main/resources/properties/db-changelog/v-1.0/db.changelog - v.1.0.xml" relativeToChangelogFile="true"/>
     
     <changeSet id="1" author="sergax">
         <tagDatabase tag="v.1.0"/>

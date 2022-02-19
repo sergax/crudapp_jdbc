@@ -1,6 +1,8 @@
 package com.sergax.crudjdbc.service.impl;
 
 import com.sergax.crudjdbc.model.Post;
+import com.sergax.crudjdbc.model.PostStatus;
+import com.sergax.crudjdbc.model.Tag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,45 +31,56 @@ class PostServiceImplTest {
 
     @Test
     void getById() {
-        Post post = postService.getById(1L);
+        Post post = postService.getById(5L);
+
         assertNotNull(post);
-        assertEquals(1L, post.getPost_id());
+        assertEquals(5L, post.getPost_id());
         Mockito.verify(postService, Mockito.times(1)).getById(Mockito.anyLong());
     }
 
     @Test
     void delete() {
+        Post createPost = new Post(2L, "Content2", null, null);
+        postService.delete(createPost.getPost_id());
+        Post find = postService.getById(2L);
+
+        assertNull(find);
+        Mockito.verify(postService, Mockito.times(1)).delete(Mockito.anyLong());
     }
 
     @Test
     void get_all_Post() {
-        List<Post> postList = postService.getAll();
+        List<Post> posts = postService.getAll();
+        Long count = posts.stream().count();
+
+        assertNotNull(posts);
+        assertEquals(posts.size(), count);
+        Mockito.verify(postService, Mockito.times(1)).getAll();
     }
 
     @Test
     void create() {
-        Post newPost = new Post(null, "Content", new ArrayList<>(), null );
+        List<Tag> tagList = new ArrayList<>();
+        tagList.add(new Tag(null, "Tag2"));
+        Post newPost = new Post(null, "Content", tagList, PostStatus.ACTIVE);
+
+        assertNotNull(newPost);
+        assertNotNull(newPost.getPost_id());
+        assertEquals("Content", newPost.getContent());
+        Mockito.verify(postService, Mockito.times(1)).create(Mockito.any(Post.class));
     }
 
     @Test
     void update() {
-        Post updatePost = postService.getById(1L);
-        String content = updatePost.getContent();
-        String newContent = "Content 1";
-        //Status updating need to add
-        updatePost.setContent(newContent);
-        Post updatedPost = postService.update(updatePost);
+        Post updatePost = postService.getById(3L);
+        Post updatedPost = new Post();
+        updatedPost.setPost_id(updatePost.getPost_id());
+        updatedPost.setContent("Content");
+        updatedPost = postService.update(updatedPost);
 
         assertNotNull(updatedPost);
-        assertEquals(updatePost.getPost_id(), updatedPost.getPost_id());
-        //getUpdated ???
-//        assertNotNull(updatedPost.);
-        assertEquals(newContent, updatedPost.getContent());
+        assertEquals(3L, updatedPost.getPost_id());
+        assertEquals("Content", updatedPost.getContent());
         Mockito.verify(postService, Mockito.times(1)).update(Mockito.any(Post.class));
-
-        updatePost.setContent(content);
-        postService.update(updatePost);
-        Mockito.verify(postService, Mockito.times(2)).update(Mockito.any(Post.class));
-
     }
 }

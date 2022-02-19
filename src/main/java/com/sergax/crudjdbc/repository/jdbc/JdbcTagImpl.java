@@ -75,7 +75,7 @@ public class JdbcTagImpl implements TagRepository {
         try {
             while (resultSet.next()) {
                 Tag tag = new Tag();
-                tag.setTag_id((long) resultSet.getInt("tag_id"));
+                tag.setTag_id(resultSet.getLong("tag_id"));
                 tag.setName(resultSet.getString("name"));
                 tags.add(tag);
             }

@@ -96,7 +96,7 @@ public class JdbcPostImpl implements PostRepository {
         try {
             while (resultSet.next()) {
                 Post post = new Post();
-                post.setPost_id((long) resultSet.getInt("post_id"));
+                post.setPost_id(resultSet.getLong("post_id"));
                 post.setContent(resultSet.getString("content"));
                 post.setTags(getTagsList(post.getPost_id()));
                 post.setStatus(PostStatus.valueOf(resultSet.getString("status")));

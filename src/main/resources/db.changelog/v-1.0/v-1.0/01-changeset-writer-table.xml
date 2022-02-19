@@ -1,20 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
-        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
 
-        <changeSet id="0" author="sergax" runOnChange="true">
+<changeSet id="0" author="sergax" runOnChange="true">
             <createTable tableName="writer">
                 <column name="writer_id" type="int" autoIncrement="true">
                     <constraints primaryKey="true" nullable="false"/>
                 </column>
-                <column name="name" type="text">
+                <column name="name" type="VARCHAR(255)">
                     <constraints nullable="true"/>
                 </column>
                 <column name="post_id" type="int">
-                    <constraints nullable="true" foreignKeyName="true" />
+                    <constraints nullable="true" foreignKeyName="true" referencedTableName="post"
+                    referencedColumnNames="post_id"/>
                 </column>
             </createTable>
         </changeSet>

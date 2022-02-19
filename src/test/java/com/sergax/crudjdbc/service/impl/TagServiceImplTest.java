@@ -10,6 +10,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,11 +28,10 @@ class TagServiceImplTest {
 
     @Test
     void get_by_id() {
-        Tag tag = tagService.getById(1L);
-//        assertNotNull(tag);
-        assertEquals(1L, tag.getTag_id());
+        Tag tag = tagService.getById(2L);
 
-        assertNotNull(tag.getName());
+        assertNotNull(tag);
+        assertEquals(2L, tag.getTag_id());
         Mockito.verify(tagService, Mockito.times(1)).getById(Mockito.anyLong());
     }
 
@@ -45,7 +46,13 @@ class TagServiceImplTest {
     }
 
     @Test
-    void getAll() {
+    void get_all() {
+        List<Tag> tags = tagService.getAll();
+        Long count = tags.stream().count();
+
+        assertNotNull(tags);
+        assertEquals(tags.size(), count);
+        Mockito.verify(tagService, Mockito.times(1)).getAll();
     }
 
     @Test
@@ -59,7 +66,7 @@ class TagServiceImplTest {
     }
 
     @Test
-    void update() {
+    void update_tag() {
         Tag updateTag = tagService.getById(2L);
         String name1 = updateTag.getName();
         String name2 = "Tag2";

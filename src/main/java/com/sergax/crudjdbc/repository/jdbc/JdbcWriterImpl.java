@@ -86,7 +86,7 @@ public class JdbcWriterImpl implements WriterRepository {
             while (resultSet.next()) {
                 Long id = resultSet.getLong("post_id");
                 Writer writer = new Writer();
-                writer.setWriter_id((long) resultSet.getInt("writer_id"));
+                writer.setWriter_id(resultSet.getLong("writer_id"));
                 writer.setName(resultSet.getString("name"));
                 writer.setPosts(getPostsList(id));
                 writers.add(writer);
