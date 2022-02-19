@@ -9,7 +9,6 @@ public class ConnectionWithDb {
     static final String USER = "user";
     static final String PASSWORD = "Aks-662828";
 
-    // + CrudProperties.get
     public static Connection getConnection() {
         Connection connection = null;
 
