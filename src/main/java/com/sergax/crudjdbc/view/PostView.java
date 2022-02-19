@@ -60,7 +60,8 @@ public class PostView extends GeneralView {
     @Override
     public void create() {
         System.out.println(createActionList);
-        String content = sc.next();
+        sc = new Scanner(System.in);
+        String content = sc.nextLine();
         List<Tag> tagList = selectTags();
         PostStatus status = selectStatus();
         System.out.println(Messages.POST.getMessage());
@@ -103,7 +104,8 @@ public class PostView extends GeneralView {
             while (true) {
                 if (response == 1) {
                     System.out.println(Messages.CONTENT.getMessage());
-                    String content = sc.next();
+                    sc = new Scanner(System.in);
+                    String content = sc.nextLine();
                     post.setContent(content);
                     break;
                 } else if (response == 2) {

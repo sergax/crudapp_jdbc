@@ -57,7 +57,8 @@ public class WriterView extends GeneralView {
     @Override
     void create() {
         System.out.println(createActionList);
-        String name = sc.next();
+        sc = new Scanner(System.in);
+        String name = sc.nextLine();
         List<Post> posts = selectPostsList();
         writerController.create(new Writer(null, name, posts));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
@@ -79,7 +80,8 @@ public class WriterView extends GeneralView {
             while (true) {
                 if (response == 1) {
                     System.out.println(Messages.NAME.getMessage());
-                    String name = sc.next();
+                    sc = new Scanner(System.in);
+                    String name = sc.nextLine();
                     writer.setName(name);
                     break;
                 } else if (response == 2) {

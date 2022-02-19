@@ -52,7 +52,8 @@ public class TagView extends GeneralView {
     @Override
     public void create() {
         System.out.println(createActionList);
-        String name = sc.next();
+        sc = new Scanner(System.in);
+        String name = sc.nextLine();
         tagController.create(new Tag(null, name));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
@@ -62,7 +63,8 @@ public class TagView extends GeneralView {
         System.out.println(updateActionList);
         Long id = Long.parseLong(String.valueOf(sc.nextLong()));
         System.out.println(Messages.NAME.getMessage());
-        String name = sc.next();
+        sc = new Scanner(System.in);
+        String name = sc.nextLine();
         tagController.update(new Tag(id, name));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
