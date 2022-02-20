@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
 
-<changeSet id="0" author="sergax" runOnChange="true">
+<changeSet id="0" author="sergax">
             <createTable tableName="writer">
                 <column name="writer_id" type="int" autoIncrement="true">
                     <constraints primaryKey="true" nullable="false"/>

@@ -17,7 +17,7 @@ public class TagView extends GeneralView {
     }
 
     private final String actionList = """
-            Choose action by tags :\s
+            Choose action by writers :\s
             1. Create\s
             2. Update\s
             3. Delete\s
