@@ -9,11 +9,11 @@
 <changeSet id="3" author="sergax" runOnChange="true">
         <createTable tableName="tag_post">
             <column name="tag_id" type="int" autoIncrement="false">
-                <constraints primaryKey="true" foreignKeyName="true" nullable="false" referencedTableName="tag"
+                <constraints primaryKey="true" foreignKeyName="fk_tag_tag_post" nullable="false" referencedTableName="tag"
                 referencedColumnNames="tag_id"/>
             </column>
             <column name="post_id" type="int" autoIncrement="false">
-                <constraints primaryKey="true" foreignKeyName="true" nullable="false" referencedTableName="post"
+                <constraints primaryKey="true" foreignKeyName="fk_post_tag_post" nullable="false" referencedTableName="post"
                 referencedColumnNames="post_id"/>
             </column>
         </createTable>

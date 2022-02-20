@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -28,7 +27,7 @@ class JdbcTagImplTest {
     private Tag tag;
 
     @Mock
-    private List<Tag> tagList;
+    private List<Tag> tagListMock;
 
     @Mock
     private TagRepository tagRepository;
@@ -52,7 +51,7 @@ class JdbcTagImplTest {
     void deleteById() {
         doNothing().when(tagRepository).deleteById(anyLong());
         tagService.delete(1L);
-        verify(tagRepository, times(1)).deleteById(1L);
+        verify(tagRepository).deleteById(1L);
     }
 
     @Test
@@ -75,16 +74,13 @@ class JdbcTagImplTest {
 
     @Test
     void getAll() {
-        Tag tag = new Tag(1L, "TagTest");
-        Tag tag2 = new Tag(2L, "TagTest2");
-        tagList.add(tag);
-        tagList.add(tag2);
-        when(tagRepository.getAll()).thenReturn(tagList);
-        when(tagList.get(anyInt())).thenReturn(tag);
+        when(tagRepository.getAll()).thenReturn(tagListMock);
+        when(tagListMock.size()).thenReturn(1);
 
         tagService.getAll();
-        tagList.get(1);
         verify(tagRepository).getAll();
-        verify(tagList).get(1);
+
+        tagListMock.size();
+        verify(tagListMock).size();
     }
 }

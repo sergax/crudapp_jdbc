@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
 
-<changeSet id="0" author="sergax">
+<changeSet id="4" author="sergax">
             <createTable tableName="writer">
                 <column name="writer_id" type="int" autoIncrement="true">
                     <constraints primaryKey="true" nullable="false"/>
@@ -15,7 +15,7 @@
                     <constraints nullable="true"/>
                 </column>
                 <column name="post_id" type="int">
-                    <constraints nullable="true" foreignKeyName="true" referencedTableName="post"
+                    <constraints nullable="true" foreignKeyName="FK_writer_post" referencedTableName="post"
                     referencedColumnNames="post_id"/>
                 </column>
             </createTable>
