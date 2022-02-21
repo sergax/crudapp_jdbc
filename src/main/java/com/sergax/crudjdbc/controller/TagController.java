@@ -7,7 +7,7 @@ import com.sergax.crudjdbc.service.impl.TagServiceImpl;
 import java.util.List;
 
 public class TagController {
-    private final TagService tagService = new TagServiceImpl();
+    TagService tagService = new TagServiceImpl();
 
     public List<Tag> getAll() {
         return tagService.getAll();

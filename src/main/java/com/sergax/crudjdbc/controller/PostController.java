@@ -7,7 +7,7 @@ import com.sergax.crudjdbc.service.impl.PostServiceImpl;
 import java.util.List;
 
 public class PostController {
-    private final PostService postService = new PostServiceImpl();
+    PostService postService = new PostServiceImpl();
 
     public List<Post> getAll() {
         return postService.getAll();

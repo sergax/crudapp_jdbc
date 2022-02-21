@@ -3,7 +3,7 @@ package com.sergax.crudjdbc.utils;
 import java.sql.*;
 
 public class ConnectionWithDb {
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/crud_jdbc";
 
     static final String USER = "user";

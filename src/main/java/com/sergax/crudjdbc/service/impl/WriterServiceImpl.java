@@ -9,7 +9,7 @@ import java.util.List;
 
 public class WriterServiceImpl implements WriterService {
 
-    private final WriterRepository writerRepository = new JdbcWriterImpl();
+    WriterRepository writerRepository = new JdbcWriterImpl();
 
     public Writer getById(Long id) {
         return writerRepository.getById(id);

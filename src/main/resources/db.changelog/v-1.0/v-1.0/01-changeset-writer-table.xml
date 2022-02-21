@@ -16,7 +16,7 @@
                 </column>
                 <column name="post_id" type="int">
                     <constraints nullable="true" foreignKeyName="FK_writer_post" referencedTableName="post"
-                    referencedColumnNames="post_id"/>
+                    referencedColumnNames="post_id" deleteCascade="true"/>
                 </column>
             </createTable>
         </changeSet>

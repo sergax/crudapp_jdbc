@@ -70,7 +70,7 @@ public class JdbcTagImpl implements TagRepository {
         return tags;
     }
 
-    public List<Tag> getTags(ResultSet resultSet) {
+    protected List<Tag> getTags(ResultSet resultSet) {
         List<Tag> tags = new ArrayList<>();
         try {
             while (resultSet.next()) {

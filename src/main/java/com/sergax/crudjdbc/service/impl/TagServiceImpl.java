@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TagServiceImpl implements TagService {
 
-    private final TagRepository tagRepository = new JdbcTagImpl();
+    TagRepository tagRepository = new JdbcTagImpl();
 
     @Override
     public Tag getById(Long id) {

@@ -10,11 +10,11 @@
         <createTable tableName="tag_post">
             <column name="tag_id" type="int" autoIncrement="false">
                 <constraints primaryKey="true" foreignKeyName="fk_tag_tag_post" nullable="false" referencedTableName="tag"
-                referencedColumnNames="tag_id"/>
+                referencedColumnNames="tag_id" deleteCascade="true"/>
             </column>
             <column name="post_id" type="int" autoIncrement="false">
                 <constraints primaryKey="true" foreignKeyName="fk_post_tag_post" nullable="false" referencedTableName="post"
-                referencedColumnNames="post_id"/>
+                referencedColumnNames="post_id" deleteCascade="true"/>
             </column>
         </createTable>
     </changeSet>

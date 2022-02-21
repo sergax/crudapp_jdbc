@@ -7,7 +7,7 @@ import com.sergax.crudjdbc.service.impl.WriterServiceImpl;
 import java.util.List;
 
 public class WriterController {
-    private final WriterService writerService = new WriterServiceImpl();
+    WriterService writerService = new WriterServiceImpl();
 
     public List<Writer> getAll() {
         return writerService.getAll();

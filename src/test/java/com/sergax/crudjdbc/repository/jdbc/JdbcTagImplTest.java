@@ -32,6 +32,8 @@ class JdbcTagImplTest {
     @Mock
     private TagRepository tagRepository;
 
+    //openMocks(this) call tells Mockito to scan this test class instance for any fields
+    // annotated with the @Mock annotation and initialize those fields as mocks.
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
